@@ -3,7 +3,7 @@ import Container from "@material-ui/core/Container";
 import React, { Suspense } from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
-import { TopMenu } from "../TopMenu/TopMenu";
+import { Menu } from "../Menu/Menu";
 import { Weather } from "../Weather/Weather";
 
 export const AppWrapper = () => {
@@ -11,10 +11,10 @@ export const AppWrapper = () => {
     <Container disableGutters>
       <Suspense fallback={<Typography variant="h4">Loading...</Typography>}>
         <Paper elevation={1}>
-          <TopMenu />
           <Router>
             <Route path="/" exact component={Weather} />
           </Router>
+          <Menu />
         </Paper>
       </Suspense>
     </Container>
