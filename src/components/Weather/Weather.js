@@ -2,22 +2,25 @@ import {
   TextField,
   InputAdornment,
   Input,
-  IconButton,
+  Typography,
+  Paper,
+  Container,
+  CardMedia,
 } from "@material-ui/core";
 import { NearMe } from "@material-ui/icons";
-import SearchIcon from "@material-ui/icons/Search";
 
 import React from "react";
 
 import { fetchWeather } from "../../api/fetchWeather";
 import { useWeatherStyles } from "./useWeatherStyles";
+// import { colors } from "../../theme/index";
 
 export const Weather = () => {
   const classes = useWeatherStyles();
   const [query, setQuery] = React.useState("");
   const [weather, setWeather] = React.useState({});
 
-  const search = async (e) => {
+  const handleSearch = async (e) => {
     if (e.key === "Enter") {
       const data = await fetchWeather(query);
       setWeather(data);
@@ -26,46 +29,59 @@ export const Weather = () => {
     }
   };
   return (
-    <div className={classes.weatherContainer}>
-      <div>
+    <Container className={classes.weatherContainer}>
+      <Paper elevation={2} className={classes.searchInput}>
         <TextField
-          className={classes.searchInput}
-          fullWidth
           autoFocus
           inputProps={<Input />}
-          variant="outlined"
           color="primary"
           type="submit"
           placeholder="Search location.."
+          alt="Search location"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          onKeyPress={search}
+          onKeyPress={handleSearch}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
-                <NearMe />
+                <NearMe fontSize="large" />
               </InputAdornment>
-            ),
-            endAdornment: (
-              <IconButton
-                type="submit"
-                className={classes.iconButton}
-                aria-label="search"
-              >
-                <SearchIcon color="primary" fontSize="large" />
-              </IconButton>
             ),
           }}
         />
-      </div>
-      {weather.main && (
-        <div className={classes.city}>
-          <h2 className={classes.cityName}>
-            <span>{weather.name}</span>
-            <sup>{weather.sys.country}</sup>
-          </h2>
-        </div>
-      )}
-    </div>
+      </Paper>
+      {weather.main ? (
+        <Container>
+          <Paper elevation={2} className={classes.searchResult}>
+            <Container className={classes.cityName}>
+              <Typography gutterBottom align="center" variant="button">
+                {weather.name}
+              </Typography>
+              <sup className={classes.sup}>{weather.sys.country}</sup>
+            </Container>
+            <Typography
+              gutterBottom
+              align="center"
+              variant="h3"
+              className={classes.temperature}
+            >
+              {Math.round(weather.main.temp)}
+              <sup>&deg;C</sup>
+            </Typography>
+            <Container className={classes.info}>
+              <CardMedia
+                className={classes.infoMedia}
+                component="img"
+                image={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
+                alt={weather.weather[0].description}
+              ></CardMedia>
+              <Typography gutterBottom align="center" variant="overline">
+                {weather.weather[0].description}
+              </Typography>
+            </Container>
+          </Paper>
+        </Container>
+      ) : null}
+    </Container>
   );
 };

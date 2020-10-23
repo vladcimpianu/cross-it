@@ -1,4 +1,4 @@
-import background from "./assets/bg_img.jpg";
+import background from "./assets/bg-red.jpg";
 import { createStyles, makeStyles } from "@material-ui/core/styles";
 
 export const useAppStyles = makeStyles((theme) =>

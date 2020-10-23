@@ -1,5 +1,5 @@
 import { createStyles, makeStyles } from "@material-ui/core/styles";
-const backgroundColor = "rgba(230, 230, 230, 0.9)";
+import { colors } from "../../theme/index";
 
 export const useWeatherStyles = makeStyles((theme) =>
   createStyles({
@@ -8,38 +8,54 @@ export const useWeatherStyles = makeStyles((theme) =>
       flexDirection: "column",
       justifyContent: "center",
       alignItems: "center",
-      "& > *": {
-        color: "white",
-      },
     },
     searchInput: {
       position: "relative",
-      backgroundColor: backgroundColor,
-      fontSize: theme.spacing(2),
+      backgroundColor: colors.gray,
       outline: "none",
+      padding: theme.spacing(3, 9),
       maxWidth: theme.spacing(50),
       marginTop: theme.spacing(20),
+      cursor: "pointer",
     },
-    city: {
+    searchResult: {
+      textAlign: "center",
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
       flexDirection: "column",
+      maxWidth: "500vh",
       margin: theme.spacing(10),
-      padding: theme.spacing(10),
+      padding: theme.spacing(5),
       borderRadius: theme.spacing(2.5),
-      background: backgroundColor,
-      boxShadow: `${theme.spacing(0.2, 0.1, 0.2, 0.1)} ${backgroundColor}`,
-      "& cityName": {
-        padding: theme.spacing(2, 2),
-        marginLeft: theme.spacing(0.5),
-        borderRadius: theme.spacing(2, 5),
-        color: "white",
-        background: "#ff8c00",
-      },
-      "& sup": {
-        margin: theme.spacing(0.5),
-      },
+      borderColor: colors.dark,
+      background: colors.darkGray,
+      boxShadow: `${theme.spacing(0.1, 0.1, 0, 0)} ${colors.gray}`,
+    },
+    cityName: {
+      color: colors.dark,
+      fontWeight: "800",
+    },
+    sup: {
+      marginLeft: theme.spacing(0.5),
+      borderRadius: theme.spacing(2, 2, 2, 1),
+      padding: theme.spacing(0.3),
+      backgroundColor: colors.red,
+    },
+    temperature: {
+      fontWeight: "800",
+      marginTop: theme.spacing(2),
+      color: colors.dark,
+    },
+    info: {
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      color: colors.dark,
+    },
+    infoMedia: {
+      height: theme.spacing(16),
+      width: theme.spacing(16),
     },
   })
 );

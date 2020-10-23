@@ -5,17 +5,26 @@ import {
 } from "@material-ui/icons";
 import React from "react";
 import { useMenuStyles } from "./useMenuStyles";
+import { colors } from "../../theme/index";
 
 export const Menu = () => {
   const classes = useMenuStyles();
   return (
-    <AppBar position="fixed" color="secondary" className={classes.appBar}>
+    <AppBar position="fixed" className={classes.appBar}>
       <Toolbar disableGutters>
-        <IconButton edge="start" color="inherit" className={classes.menuItem}>
-          <Bullets />
+        <IconButton
+          edge="start"
+          style={{ color: colors.gray }}
+          className={classes.menuItem}
+        >
+          <Bullets fontSize="large" />
         </IconButton>
-        <IconButton edge="end" color="inherit" className={classes.menuItem}>
-          <Weather />
+        <IconButton
+          edge="end"
+          style={{ color: colors.red }}
+          className={classes.menuItem}
+        >
+          <Weather fontSize="large" />
         </IconButton>
       </Toolbar>
     </AppBar>

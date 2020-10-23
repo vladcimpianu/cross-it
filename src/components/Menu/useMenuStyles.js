@@ -1,4 +1,5 @@
 import { createStyles, makeStyles } from "@material-ui/core/styles";
+import { colors } from "../../theme/index";
 
 export const useMenuStyles = makeStyles((theme) =>
   createStyles({
@@ -7,9 +8,10 @@ export const useMenuStyles = makeStyles((theme) =>
       bottom: 0,
       alignItems: "center",
       padding: theme.spacing(1.2),
+      backgroundColor: colors.dark,
     },
     menuItem: {
-      margin: theme.spacing(0, 10),
+      margin: theme.spacing(1, 13),
     },
   })
 );
