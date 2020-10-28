@@ -8,27 +8,48 @@ import {
   CardMedia,
 } from "@material-ui/core";
 import { NearMe } from "@material-ui/icons";
+import axios from "axios";
 
 import React from "react";
 
-import { fetchWeather } from "../../api/";
+import { API_KEY, URL } from "../../api";
+import { fetchWeather } from "../../api";
 import { useWeatherStyles } from "./useWeatherStyles";
-// import { colors } from "../../theme/index";
-import { fetchInitialWeather } from "../../api/";
 import { usePosition } from "use-position";
 
 export const Weather = () => {
-  const classes = useWeatherStyles();
   const [query, setQuery] = React.useState("");
+  // const [initialWeather, setInitialWeather] = React.useState({});
   const [fetchedWeather, setFetchedWeather] = React.useState({});
-  const [initialWeather, setInitialWeather] = React.useState({});
-  const { latitude, longitude } = usePosition();
 
-  React.useEffect(() => {
-    const initialLocation = fetchInitialWeather(latitude, longitude);
-    console.log(initialLocation);
-    setInitialWeather(initialLocation);
-  }, [latitude, longitude]);
+  const watch = true;
+  const { latitude, longitude } = usePosition(watch);
+  const classes = useWeatherStyles();
+
+  const fetchInitialWeather = async () => {
+    const initialData = await axios
+      .get(URL, {
+        params: {
+          lat: latitude,
+          lon: longitude,
+          units: "metric",
+          APPID: API_KEY,
+        },
+      })
+      .then((res) => res.data);
+    console.log(initialData, "FETCHER");
+    // setInitialWeather(initialData);
+    return initialData;
+  };
+  const initialWeather = fetchInitialWeather();
+
+  React.useEffect(() => {}, []);
+
+  // React.useEffect(() => {
+  //   const initialData = fetchInitialWeather({ latitude, longitude });
+  //   setInitialWeather({ initialData });
+  //   console.log(initialData, "COMPONENT");
+  // }, [latitude, longitude]);
 
   const handleSearch = async (e) => {
     if (e.key === "Enter") {
@@ -41,9 +62,11 @@ export const Weather = () => {
 
   return (
     <Container className={classes.weatherContainer}>
-      <h1 style={{ color: "yellow", fontSize: "40px" }}>
-        {initialWeather.name}
-      </h1>
+      {initialWeather && (
+        <h1 style={{ color: "yellow", fontSize: "40px" }}>
+          {initialWeather.name}
+        </h1>
+      )}
       <Paper elevation={2} className={classes.searchInput}>
         <TextField
           autoFocus

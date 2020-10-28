@@ -1,7 +1,7 @@
 import Container from "@material-ui/core/Container";
 import React from "react";
 
-import { AppWrapper } from "./components/AppWrapper/AppWrapper";
+import { AppWrapper } from "./components/AppWrapper/AppWrapper.jsx";
 import { useAppStyles } from "./theme/styles/useAppStyles";
 
 export const App = () => {

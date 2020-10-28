@@ -1,16 +1,19 @@
-import axios from "axios";
+// import axios from "axios";
 
-export const URL = "//api.openweathermap.org/data/2.5/weather";
+// import { API_KEY, URL } from "./";
 
-export const fetchInitialWeather = async (latitude, longitude) => {
-  const { initialData } = await axios.get(URL, {
-    params: {
-      lat: latitude,
-      lon: longitude,
-      units: "metric",
-      APPID: process.env.REACT_APP_API_KEY,
-    },
-  });
-  // console.log(initialData);
-  return initialData;
-};
+// export const fetchInitialWeather = async ({ latitude, longitude }) => {
+//   const initialData = await axios
+//     .get(URL, {
+//       params: {
+//         lat: latitude,
+//         lon: longitude,
+//         units: "metric",
+//         APPID: API_KEY,
+//       },
+//     })
+//     .then((res) => res.data);
+//   console.log(initialData, "FETCHER");
+
+//   return initialData;
+// };
