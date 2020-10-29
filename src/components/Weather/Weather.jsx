@@ -8,48 +8,39 @@ import {
   CardMedia,
 } from "@material-ui/core";
 import { NearMe } from "@material-ui/icons";
-import axios from "axios";
 
-import React from "react";
+import React, { useEffect } from "react";
 
-import { API_KEY, URL } from "../../api";
 import { fetchWeather } from "../../api";
 import { useWeatherStyles } from "./useWeatherStyles";
-import { usePosition } from "use-position";
+import { API_KEY } from "../../api";
 
 export const Weather = () => {
   const [query, setQuery] = React.useState("");
-  // const [initialWeather, setInitialWeather] = React.useState({});
+  const [initialWeather, setInitialWeather] = React.useState({});
   const [fetchedWeather, setFetchedWeather] = React.useState({});
+  const { renderedWeather } = fetchedWeather || initialWeather;
 
-  const watch = true;
-  const { latitude, longitude } = usePosition(watch);
   const classes = useWeatherStyles();
 
-  const fetchInitialWeather = async () => {
-    const initialData = await axios
-      .get(URL, {
-        params: {
-          lat: latitude,
-          lon: longitude,
-          units: "metric",
-          APPID: API_KEY,
-        },
-      })
-      .then((res) => res.data);
-    console.log(initialData, "FETCHER");
-    // setInitialWeather(initialData);
-    return initialData;
+  const getPosition = () => {
+    return new Promise(function (resolve, reject) {
+      navigator.geolocation.getCurrentPosition(resolve, reject);
+    });
   };
-  const initialWeather = fetchInitialWeather();
-
-  React.useEffect(() => {}, []);
-
-  // React.useEffect(() => {
-  //   const initialData = fetchInitialWeather({ latitude, longitude });
-  //   setInitialWeather({ initialData });
-  //   console.log(initialData, "COMPONENT");
-  // }, [latitude, longitude]);
+  const getWeather = async (latitude, longitude) => {
+    const INITIAL_WEATHER_URL = `//api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${API_KEY}&units=metric`;
+    const rawData = await fetch(INITIAL_WEATHER_URL);
+    const data = await rawData.json();
+    setInitialWeather(data);
+  };
+  useEffect(() => {
+    getPosition()
+      .then((position) => {
+        getWeather(position.coords.latitude, position.coords.longitude);
+      })
+      .catch((err) => console.log(err.message));
+  }, []);
 
   const handleSearch = async (e) => {
     if (e.key === "Enter") {
@@ -62,11 +53,6 @@ export const Weather = () => {
 
   return (
     <Container className={classes.weatherContainer}>
-      {initialWeather && (
-        <h1 style={{ color: "yellow", fontSize: "40px" }}>
-          {initialWeather.name}
-        </h1>
-      )}
       <Paper elevation={2} className={classes.searchInput}>
         <TextField
           autoFocus
@@ -87,56 +73,38 @@ export const Weather = () => {
           }}
         />
       </Paper>
-      {
-        fetchedWeather.main ? (
-          <Container>
-            <Paper elevation={2} className={classes.searchResult}>
-              <Container className={classes.cityName}>
-                <Typography gutterBottom align="center" variant="button">
-                  {fetchedWeather.name}
-                </Typography>
-                <sup className={classes.sup}>{fetchedWeather.sys.country}</sup>
-              </Container>
-              <Typography
-                gutterBottom
-                align="center"
-                variant="h3"
-                className={classes.temperature}
-              >
-                {Math.round(fetchedWeather.main.temp)}
-                <sup>&deg;C</sup>
+      {renderedWeather && (
+        <Container>
+          <Paper elevation={2} className={classes.searchResult}>
+            <Container className={classes.cityName}>
+              <Typography gutterBottom align="center" variant="button">
+                {renderedWeather.name}
               </Typography>
-              <Container className={classes.info}>
-                <CardMedia
-                  className={classes.infoMedia}
-                  component="img"
-                  image={`https://openweathermap.org/img/wn/${fetchedWeather.weather[0].icon}@2x.png`}
-                  alt={fetchedWeather.weather[0].description}
-                ></CardMedia>
-                <Typography gutterBottom align="center" variant="overline">
-                  {fetchedWeather.weather[0].description}
-                </Typography>
-              </Container>
-            </Paper>
-          </Container>
-        ) : null
-        // ) : (
-        //   <>
-        //     <Typography gutterBottom align="center" variant="button">
-        //       {initialWeather.name}
-        //     </Typography>
-        //     <Typography
-        //       gutterBottom
-        //       align="center"
-        //       variant="h3"
-        //       className={classes.temperature}
-        //     >
-        //       {Math.round(initialWeather.main.temp)}
-        //       <sup>&deg;C</sup>
-        //     </Typography>
-        //   </>
-        // )
-      }
+              <sup className={classes.sup}>{renderedWeather.sys.country}</sup>
+            </Container>
+            <Typography
+              gutterBottom
+              align="center"
+              variant="h3"
+              className={classes.temperature}
+            >
+              {Math.round(renderedWeather.main.temp)}
+              <sup>&deg;C</sup>
+            </Typography>
+            <Container className={classes.info}>
+              <CardMedia
+                className={classes.infoMedia}
+                component="img"
+                image={`https://openweathermap.org/img/wn/${renderedWeather.weather[0].icon}@2x.png`}
+                alt={renderedWeather.weather[0].description}
+              ></CardMedia>
+              <Typography gutterBottom align="center" variant="overline">
+                {renderedWeather.weather[0].description}
+              </Typography>
+            </Container>
+          </Paper>
+        </Container>
+      )}
     </Container>
   );
 };
