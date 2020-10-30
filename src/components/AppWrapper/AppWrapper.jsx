@@ -17,7 +17,11 @@ export const AppWrapper = () => {
   return (
     <Container className={classes.appWrapper}>
       <Suspense
-        fallback={<Typography variant="h4">Loading...Please Wait!</Typography>}
+        fallback={
+          <Typography variant="h4" color="textSecondary">
+            Loading...Please Wait!
+          </Typography>
+        }
       >
         <Router>
           <Switch>
