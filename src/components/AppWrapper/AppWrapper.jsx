@@ -11,18 +11,13 @@ import { Menu } from "../Menu/Menu.jsx";
 import { Weather } from "../Weather/Weather";
 import { Reminders } from "../Reminders/Reminders";
 import { useAppWrapperStyles } from "./useAppWrapperStyles";
+import Loading from "../Loading/Loading";
 
 export const AppWrapper = () => {
   const classes = useAppWrapperStyles();
   return (
     <Container className={classes.appWrapper}>
-      <Suspense
-        fallback={
-          <Typography variant="h4" color="textSecondary">
-            Loading...Please Wait!
-          </Typography>
-        }
-      >
+      <Suspense fallback={<Loading />}>
         <Router>
           <Switch>
             <Route path="/reminders" exact component={Reminders} />

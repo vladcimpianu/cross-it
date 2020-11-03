@@ -24,7 +24,7 @@ export const Menu = () => {
         </IconButton>
         <IconButton
           edge="end"
-          style={{ color: colors.red }}
+          style={{ color: colors.gray }}
           className={classes.menuItem}
           onClick={() => push("/weather")}
         >
