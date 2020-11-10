@@ -6,6 +6,7 @@ export const useMenuStyles = makeStyles((theme) =>
     appBar: {
       top: "auto",
       bottom: 0,
+      marginTop: theme.spacing(2),
       alignItems: "center",
       padding: theme.spacing(1.2),
       backgroundColor: colors.dark,

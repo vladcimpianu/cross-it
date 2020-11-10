@@ -6,7 +6,7 @@ import { useStyles } from "./styles";
 
 export const Loading = ({ delay = 0, minHeight }) => {
   const classes = useStyles({ minHeight });
-  const [showLoading, setShowLoading] = useState(!delay);
+  const [showLoading, setShowLoading] = useState(delay);
 
   setTimeout(() => {
     setShowLoading(true);
@@ -18,7 +18,7 @@ export const Loading = ({ delay = 0, minHeight }) => {
 
   return (
     <div className={classes.root}>
-      <Typography variant="h5" color="textSecondary">
+      <Typography variant="h5" color="error">
         Loading... Please wait
       </Typography>
       )

@@ -1,5 +1,4 @@
-import { TextField, Input, InputAdornment } from "@material-ui/core";
-import SearchIcon from "@material-ui/icons/Search";
+import { TextField, Input } from "@material-ui/core";
 import React from "react";
 
 export function SearchField({
@@ -7,24 +6,19 @@ export function SearchField({
   onChange,
   onKeyPress,
   type,
+  placeholder,
   InputProps,
 }) {
   return (
     <TextField
       value={value}
-      placeholder="Search"
+      placeholder={placeholder}
       alt="Search location"
       inputProps={<Input />}
       onChange={onChange}
       onKeyPress={onKeyPress}
       type={type}
-      InputProps={{
-        startAdornment: (
-          <InputAdornment position="start">
-            <SearchIcon fontSize="large" />
-          </InputAdornment>
-        ),
-      }}
+      InputProps={InputProps}
     />
   );
 }

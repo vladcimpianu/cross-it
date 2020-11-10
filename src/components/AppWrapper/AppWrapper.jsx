@@ -1,11 +1,6 @@
-import { Typography, Container } from "@material-ui/core";
+import { Container } from "@material-ui/core";
 import React, { Suspense } from "react";
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  Redirect,
-} from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import { Menu } from "../Menu/Menu.jsx";
 import { Weather } from "../Weather/Weather";
@@ -17,16 +12,16 @@ export const AppWrapper = () => {
   const classes = useAppWrapperStyles();
   return (
     <Container className={classes.appWrapper}>
-      <Suspense fallback={<Loading />}>
+      <Suspense fallback={<Loading delay={500} />}>
         <Router>
+          <Menu />
           <Switch>
-            <Route path="/reminders" exact component={Reminders} />
-            <Route path="/weather" exact component={Weather} />
-            <Route path="/" render={() => <Redirect to="/weather" />} />
+            <Route exact path="/" component={Weather} />
+            <Route path="/reminders" component={Reminders} />
+            <Route path="/weather" component={Weather} />
           </Switch>
         </Router>
       </Suspense>
-      <Menu />
     </Container>
   );
 };

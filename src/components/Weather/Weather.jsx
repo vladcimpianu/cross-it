@@ -1,4 +1,12 @@
-import { Typography, Paper, Container, CardMedia } from "@material-ui/core";
+import {
+  Typography,
+  Paper,
+  Container,
+  CardMedia,
+  InputAdornment,
+} from "@material-ui/core";
+import SearchIcon from "@material-ui/icons/Search";
+
 import React from "react";
 import { Loading } from "../Loading/Loading";
 
@@ -51,14 +59,6 @@ export const Weather = () => {
   const renderedWeather = fetchedWeather.main ? fetchedWeather : initialWeather;
   return renderedWeather.main ? (
     <Container className={classes.weatherContainer}>
-      <Paper elevation={2} className={classes.searchInput}>
-        <SearchField
-          onChange={(e) => setQuery(e.target.value)}
-          onKeyPress={handleSearch}
-          value={query}
-          type="submit"
-        />
-      </Paper>
       {renderedWeather.main && (
         <Container>
           <Paper elevation={2} className={classes.searchResultsContainer}>
@@ -74,7 +74,23 @@ export const Weather = () => {
               variant="h3"
               className={classes.temperature}
             >
-              {Math.round(renderedWeather.main.temp)}
+              {Math.round(renderedWeather.main.temp_min)}
+              <sup>&deg;C</sup>
+              <CardMedia
+                className={classes.infoMedia}
+                component="img"
+                image={`https://openweathermap.org/img/wn/${renderedWeather.weather[0].icon}@2x.png`}
+                alt={renderedWeather.weather[0].description}
+              ></CardMedia>
+            </Typography>
+            <Typography
+              gutterBottom
+              align="center"
+              variant="overline"
+              className={classes.temperature}
+            >
+              Max. temperature today:
+              {Math.round(renderedWeather.main.temp_max)}
               <sup>&deg;C</sup>
             </Typography>
             <Typography
@@ -83,25 +99,37 @@ export const Weather = () => {
               variant="overline"
               className={classes.temperature}
             >
-              Feels like: {Math.round(renderedWeather.main.feels_like)}
+              Min. temperature today:
+              {Math.round(renderedWeather.main.temp_min)}
               <sup>&deg;C</sup>
             </Typography>
             <Container className={classes.info}>
-              <CardMedia
-                className={classes.infoMedia}
-                component="img"
-                image={`https://openweathermap.org/img/wn/${renderedWeather.weather[0].icon}@2x.png`}
-                alt={renderedWeather.weather[0].description}
-              ></CardMedia>
               <Typography gutterBottom align="center" variant="overline">
-                {renderedWeather.weather[0].description}
+                Feels like: {Math.round(renderedWeather.main.feels_like)}
+                <sup>&deg;C.</sup> {renderedWeather.weather[0].description}.{" "}
               </Typography>
             </Container>
           </Paper>
         </Container>
       )}
+      <Paper elevation={2} className={classes.searchInput}>
+        <SearchField
+          onChange={(e) => setQuery(e.target.value)}
+          onKeyPress={handleSearch}
+          value={query}
+          type="submit"
+          placeholder="Search other location.."
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <SearchIcon fontSize="large" />
+              </InputAdornment>
+            ),
+          }}
+        />
+      </Paper>
     </Container>
   ) : (
-    <Loading delay={2000} />
+    <Loading />
   );
 };

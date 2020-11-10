@@ -9,7 +9,7 @@ import { colors } from "../../theme";
 import { useHistory } from "react-router-dom";
 
 export const Menu = () => {
-  const { push } = useHistory();
+  let history = useHistory();
   const classes = useMenuStyles();
   return (
     <AppBar position="fixed" className={classes.appBar}>
@@ -18,7 +18,7 @@ export const Menu = () => {
           edge="start"
           style={{ color: colors.gray }}
           className={classes.menuItem}
-          onClick={() => push("/reminders")}
+          onClick={() => history.push("/reminders")}
         >
           <BulletsIcon fontSize="large" />
         </IconButton>
@@ -26,7 +26,7 @@ export const Menu = () => {
           edge="end"
           style={{ color: colors.gray }}
           className={classes.menuItem}
-          onClick={() => push("/weather")}
+          onClick={() => history.push("/weather")}
         >
           <WeatherIcon fontSize="large" />
         </IconButton>
