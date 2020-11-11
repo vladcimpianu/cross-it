@@ -1,2 +1,2 @@
 export * from "./fetchWeather";
-export * from "./constants";
+export * from "./routes";

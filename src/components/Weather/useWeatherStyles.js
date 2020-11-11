@@ -8,6 +8,7 @@ export const useWeatherStyles = makeStyles((theme) =>
       flexDirection: "column",
       justifyItems: "center",
       alignItems: "center",
+      padding: theme.spacing(5),
     },
     searchInput: {
       position: "relative",
@@ -17,10 +18,11 @@ export const useWeatherStyles = makeStyles((theme) =>
       borderRadius: theme.spacing(2),
       margin: theme.spacing(5),
       padding: theme.spacing(3),
+      boxShadow: `${theme.spacing(0.1, 0.1, 0, 0)} ${colors.darkGray}`,
     },
     searchResultsContainer: {
-      margin: theme.spacing(5),
-      padding: theme.spacing(2),
+      margin: theme.spacing(3, 1),
+      padding: theme.spacing(3),
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
@@ -29,12 +31,12 @@ export const useWeatherStyles = makeStyles((theme) =>
       alignContent: "center",
       borderRadius: theme.spacing(2),
       borderColor: colors.dark,
-      background: colors.white,
-      boxShadow: `${theme.spacing(0.2, 0.2, 0, 0)} ${colors.gray}`,
+      background: colors.dark,
+      boxShadow: `${theme.spacing(0.1, 0.1, 0, 0)} ${colors.darkGray}`,
     },
     cityName: {
-      color: colors.dark,
-      fontWeight: "900",
+      color: colors.white,
+      fontWeight: "bold",
     },
     sup: {
       marginLeft: theme.spacing(0.5),
@@ -45,7 +47,7 @@ export const useWeatherStyles = makeStyles((theme) =>
     temperature: {
       fontWeight: "800",
       marginTop: theme.spacing(2),
-      color: colors.dark,
+      color: colors.white,
       justifyItems: "center",
       alignItems: "center",
       display: "flex",
@@ -55,7 +57,7 @@ export const useWeatherStyles = makeStyles((theme) =>
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
-      color: colors.dark,
+      color: colors.white,
     },
     infoMedia: {
       height: theme.spacing(16),

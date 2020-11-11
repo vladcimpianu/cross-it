@@ -13,7 +13,7 @@ import { Loading } from "../Loading/Loading";
 import { fetchWeather } from "../../api";
 import { SearchField } from "../SearchField/SearchField";
 import { useWeatherStyles } from "./useWeatherStyles";
-import { API_KEY } from "../../api";
+import { imgRoute, URL } from "../../api";
 
 export const Weather = () => {
   const [query, setQuery] = React.useState("");
@@ -29,7 +29,7 @@ export const Weather = () => {
   };
 
   const getInitialWeather = async function (lat, lon) {
-    const newURL = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`;
+    const newURL = `${URL}?lat=${lat}&lon=${lon}&appid=${process.env.REACT_APP_API_KEY}&units=metric`;
     const rawData = await fetch(newURL);
     const data = await rawData.json();
     setInitialWeather(data);
@@ -79,7 +79,7 @@ export const Weather = () => {
               <CardMedia
                 className={classes.infoMedia}
                 component="img"
-                image={`https://openweathermap.org/img/wn/${renderedWeather.weather[0].icon}@2x.png`}
+                image={`${imgRoute}${renderedWeather.weather[0].icon}@2x.png`}
                 alt={renderedWeather.weather[0].description}
               ></CardMedia>
             </Typography>
